@@ -22,7 +22,7 @@ app.mount("../public", StaticFiles(directory="static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("../public/index.html", {"request": request})
 
 
 app.add_middleware(
