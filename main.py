@@ -8,7 +8,7 @@ models.Base.metadata.create_all(engine)
 
 app = FastAPI()
 
-app.mount("./public", StaticFiles(directory="public"), name="public")
+app.mount("/public", StaticFiles(directory="public"), name="public")
 
 
 origins = [
