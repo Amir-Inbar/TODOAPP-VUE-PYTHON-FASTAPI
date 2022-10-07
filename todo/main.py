@@ -17,7 +17,7 @@ origins = [
 ]
 
 templates = Jinja2Templates(directory="public")
-app.mount("./public", StaticFiles(directory="static"), name="static")
+app.mount("../public", StaticFiles(directory="static"), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)
