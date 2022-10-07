@@ -4,13 +4,9 @@ from todo.database import engine
 from todo import models
 import uvicorn
 
-
-
 models.Base.metadata.create_all(engine)
 
 app = FastAPI()
-
-
 
 origins = [
     "http://localhost:3000",
