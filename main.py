@@ -2,13 +2,19 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from todo.database import engine
+from starlette.responses import FileResponse
 from todo import models
 
 models.Base.metadata.create_all(engine)
 
 app = FastAPI()
 
-app.mount("./public/index.html", StaticFiles(directory="public"), name="public")
+app.mount("./public", StaticFiles(directory="public"), name="public")
+
+
+@app.get("/")
+async def read_index():
+    return FileResponse('public/index.html')
 
 
 origins = [
