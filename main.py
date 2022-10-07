@@ -14,7 +14,7 @@ app.mount("./public", StaticFiles(directory="public"), name="public")
 
 @app.get("/")
 async def read_index():
-    return FileResponse('public/index.html')
+    return FileResponse('./public/index.html')
 
 
 origins = [
