@@ -1,20 +1,24 @@
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from todo.database import engine
-from starlette.responses import FileResponse
 from todo import models
+import uvicorn
+
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 models.Base.metadata.create_all(engine)
 
 app = FastAPI()
 
-app.mount("./public", StaticFiles(directory="public"), name="public")
+templates = Jinja2Templates(directory="public")
+app.mount("./public", StaticFiles(directory="static"), name="static")
 
 
-@app.get("/")
-async def read_index():
-    return FileResponse('./public/index.html')
+@app.get("/", response_class=HTMLResponse)
+async def read_item(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 origins = [
@@ -28,3 +32,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+if __name__ == '__main__':
+    uvicorn.run(app)
